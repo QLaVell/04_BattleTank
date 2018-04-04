@@ -13,6 +13,10 @@ UCLASS()
 class BATTLETANK_API ATankPlayerController : public APlayerController
 {
 	GENERATED_BODY()
+
+private:
+	// Get the ground location of the crosshair if it exists
+	bool GetSightRayHitLocation(FVector &OutHitLocation) const;
 	
 public:
 	// Called every frame
