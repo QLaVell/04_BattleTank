@@ -17,6 +17,12 @@ class BATTLETANK_API ATankPlayerController : public APlayerController
 private:
 	// Get the ground location of the crosshair if it exists
 	bool GetSightRayHitLocation(FVector &OutHitLocation) const;
+
+	UPROPERTY(EditAnywhere)
+	float CrossHairXLocation = 0.5;
+
+	UPROPERTY(EditAnywhere)
+	float CrossHairYLocation = 0.33333;
 	
 public:
 	// Called every frame
