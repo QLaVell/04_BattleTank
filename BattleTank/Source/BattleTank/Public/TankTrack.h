@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright Quintin Oliver
 
 #pragma once
 
@@ -20,4 +20,9 @@ public:
 	// Max force per track, in Netwons
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	float TrackMaxDrivingForce = 400000; // Assume 40 Ton tank and 1g acceleration
+
+private:
+	UTankTrack();
+
+	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
 };
