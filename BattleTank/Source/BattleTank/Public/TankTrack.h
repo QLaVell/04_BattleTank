@@ -18,6 +18,6 @@ public:
 	void SetThrottle(float Throttle);
 	
 	// Max force per track, in Netwons
-	UPROPERTY(EditDefaultsOnly, Category = Setup)
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	float TrackMaxDrivingForce = 400000; // Assume 40 Ton tank and 1g acceleration
 };
