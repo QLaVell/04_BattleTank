@@ -20,10 +20,19 @@ UTankAimingComponent::UTankAimingComponent()
 }
 
 void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) {
-	if ((GetWorld()->GetTimeSeconds() - LastFireTime > ReloadTimeInSeconds)) {
+	if ((GetWorld()->GetTimeSeconds() - LastFireTime < ReloadTimeInSeconds)) {
 		FiringState = EFiringStatus::Reloading;
+	} else if (IsBarrelMoving()) {
+		FiringState = EFiringStatus::Aiming;
+	} else {
+		FiringState = EFiringStatus::Locked;
 	}
-	// TODO Handle aiming and locked states
+}
+
+bool UTankAimingComponent::IsBarrelMoving() {
+	if (!ensure(Barrel)) { return false; }
+	auto BarrelForward = Barrel->GetForwardVector();
+	return !BarrelForward.Equals(AimDirection, 0.01);
 }
 
 void UTankAimingComponent::Initialize(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet) {
@@ -50,10 +59,10 @@ void UTankAimingComponent::AimAt(FVector HitLocation) {
 	);
 	// Calculate the OutLaunchVelocity
 	if (bHaveAimSolution) {
-		auto AimDirection = OutLaunchVelocity.GetSafeNormal();
+		AimDirection = OutLaunchVelocity.GetSafeNormal();
 		auto TankName = GetOwner()->GetName();
 		
-		MoveBarrelTowards(AimDirection);
+		MoveBarrelTowards();
 	}
 }
 
@@ -69,10 +78,11 @@ void UTankAimingComponent::Fire() {
 			);
 
 		Projectile->LaunchProjectile(LaunchSpeed);
+		LastFireTime = GetWorld()->GetTimeSeconds();
 	}
 }
 
-void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection) {
+void UTankAimingComponent::MoveBarrelTowards() {
 	if (!ensure(Barrel && Turret)) { return; }
 
 	// Calculate difference between current barrel rotation and AimDirection
