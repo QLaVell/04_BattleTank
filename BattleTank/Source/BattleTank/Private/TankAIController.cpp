@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright Quintin Oliver
 
 #include "BattleTank.h"
 #include "TankAimingComponent.h"
@@ -23,6 +23,5 @@ void ATankAIController::Tick(float DeltaTime) {
 	// Aim towards the player
 	AimingComponent->AimAt(PlayerTank->GetActorLocation());
 
-	// TODO Fix firing
-	//ControlledTank->Fire();
+	AimingComponent->Fire(); // TODO Limit fire rate
 }

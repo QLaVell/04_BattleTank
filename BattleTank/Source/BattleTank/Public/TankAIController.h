@@ -1,11 +1,9 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright Quintin Oliver
 
 #pragma once
 
 #include "AIController.h"
 #include "TankAIController.generated.h"
-
-class ATank;
 
 /**
  * 
