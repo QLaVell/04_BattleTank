@@ -17,11 +17,15 @@ void ATankAIController::Tick(float DeltaTime) {
 	if (!ensure(PlayerTank && ControlledTank)) { return; }
 	// Move towards player
 	MoveToActor(PlayerTank, AcceptanceRadius); // TODO Check radius is in cm
+	
 
 	auto AimingComponent = ControlledTank->FindComponentByClass<UTankAimingComponent>();
 	if (!ensure(AimingComponent)) { return; }
 	// Aim towards the player
 	AimingComponent->AimAt(PlayerTank->GetActorLocation());
 
-	AimingComponent->Fire(); // TODO Limit fire rate
+	// If locked, fire
+	if (AimingComponent->GetFiringState() == EFiringState::Locked) {
+		AimingComponent->Fire(); // TODO Limit fire rate
+	}
 }

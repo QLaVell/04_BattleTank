@@ -7,7 +7,7 @@
 
 // Enum for aiming state
 UENUM()
-enum class EFiringStatus : uint8 {
+enum class EFiringState : uint8 {
 	Reloading,
 	Aiming,
 	Locked
@@ -33,9 +33,11 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Firing")
 	void Fire();
 
+	EFiringState GetFiringState() const;
+
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "Enum")
-	EFiringStatus FiringState = EFiringStatus::Aiming;
+	EFiringState FiringState = EFiringState::Aiming;
 
 private:
 	// Sets default values for this component's properties
