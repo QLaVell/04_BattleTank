@@ -21,6 +21,12 @@ protected:
 private:
 	virtual void BeginPlay() override;
 
+	// Gets called when the pawn is possessed
+	virtual void SetPawn(APawn* InPawn) override;
+
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+	UFUNCTION()
+	void OnPossessedTankDeath();
 };
