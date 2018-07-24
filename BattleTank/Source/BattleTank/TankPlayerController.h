@@ -16,8 +16,14 @@ class BATTLETANK_API ATankPlayerController : public APlayerController
 	GENERATED_BODY()
 
 private:
+	// Gets called when the pawn is possessed
+	virtual void SetPawn(APawn* InPawn) override;
+
 	// Get the ground location of the crosshair if it exists
 	bool GetSightRayHitLocation(FVector &OutHitLocation) const;
+
+	UFUNCTION()
+	void OnPossessedTankDeath();
 
 	UPROPERTY(EditDefaultsOnly)
 	float CrossHairXLocation = 0.5;
