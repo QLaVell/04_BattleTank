@@ -1,4 +1,4 @@
-// Copyright Quintin Oliver
+// Copyright 2018 Quintin Oliver All Rights Reserved.
 
 #pragma once
 

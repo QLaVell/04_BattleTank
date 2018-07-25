@@ -1,4 +1,4 @@
-// Copyright Quintin Oliver
+// Copyright 2018 Quintin Oliver All Rights Reserved.
 
 #pragma once
 
@@ -14,6 +14,21 @@ UCLASS()
 class BATTLETANK_API ATankPlayerController : public APlayerController
 {
 	GENERATED_BODY()
+
+public:
+	// Called every frame
+	virtual void Tick(float DeltaTime) override;
+
+	virtual void BeginPlay() override;
+
+	// Start the tank moving the barrel so that a shot would hit where
+	// the crosshair intersects the world
+	void AimTowardsCrosshair();
+
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
+	void FoundAimingComponent(UTankAimingComponent* AimCompRef);
 
 private:
 	// Gets called when the pawn is possessed
@@ -37,18 +52,4 @@ private:
 	bool GetLookDirection(FVector2D ScreenLocation, FVector& LookDirection) const;
 
 	bool GetLookVectorHitLocation(FVector LookDirection, FVector& OutHitLocation) const;
-
-protected:
-	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
-	void FoundAimingComponent(UTankAimingComponent* AimCompRef);
-	
-public:
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
-	virtual void BeginPlay() override;
-
-	// Start the tank moving the barrel so that a shot would hit where
-	// the crosshair intersects the world
-	void AimTowardsCrosshair();
 };

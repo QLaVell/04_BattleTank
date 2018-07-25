@@ -37,7 +37,7 @@ EFiringState UTankAimingComponent::GetFiringState() const {
 
 bool UTankAimingComponent::IsBarrelMoving() {
 	if (!ensure(Barrel)) { return false; }
-	auto BarrelForward = Barrel->GetForwardVector();
+	FVector BarrelForward = Barrel->GetForwardVector();
 	return !BarrelForward.Equals(AimDirection, 0.01);
 }
 
@@ -65,9 +65,7 @@ void UTankAimingComponent::AimAt(FVector HitLocation) {
 	);
 	// Calculate the OutLaunchVelocity
 	if (bHaveAimSolution) {
-		AimDirection = OutLaunchVelocity.GetSafeNormal();
-		auto TankName = GetOwner()->GetName();
-		
+		AimDirection = OutLaunchVelocity.GetSafeNormal();		
 		MoveBarrelTowards();
 	}
 }
@@ -77,7 +75,7 @@ void UTankAimingComponent::Fire() {
 		// Spawn a projectile at the socket location of the barrel
 		if (!ensure(Barrel)) { return; }
 		if (!ensure(ProjectileBlueprint)) { return; }
-		auto Projectile = GetWorld()->SpawnActor<AProjectile>(
+		AProjectile* Projectile = GetWorld()->SpawnActor<AProjectile>(
 			ProjectileBlueprint,
 			Barrel->GetSocketLocation(FName("Projectile")),
 			Barrel->GetSocketRotation(FName("Projectile"))
@@ -98,9 +96,9 @@ void UTankAimingComponent::MoveBarrelTowards() {
 	if (!ensure(Barrel && Turret)) { return; }
 
 	// Calculate difference between current barrel rotation and AimDirection
-	auto BarrelRotator = Barrel->GetForwardVector().Rotation();
-	auto AimAsRotator = AimDirection.Rotation();
-	auto DeltaRotator = AimAsRotator - BarrelRotator;
+	FRotator BarrelRotator = Barrel->GetForwardVector().Rotation();
+	FRotator AimAsRotator = AimDirection.Rotation();
+	FRotator DeltaRotator = AimAsRotator - BarrelRotator;
 	Barrel->Elevate(DeltaRotator.Pitch);
 	if (FMath::Abs(DeltaRotator.Yaw) < 180) {
 		Turret->Rotate(DeltaRotator.Yaw);
