@@ -33,4 +33,7 @@ private:
 
 	UPROPERTY(VisibleAnywhere, Category = "Health")
 	int32 CurrentHealth; // Initialized in BeginPlay
+
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+	UParticleSystemComponent* DeathEffect = nullptr;
 };
